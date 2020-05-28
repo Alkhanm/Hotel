@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" lang="pt-br"> </meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> </meta>
+    <link rel="stylesheet" href="../resources/css/all.css"> </link>
+    <link rel="stylesheet" href="../resources/plugins/bootstrap/css/bootstrap.min.css"> </link>
+    <link rel="stylesheet" href="../resources/plugins/fontawesome/css/all.min.css"> </link>
+    <title>Kingdom - Gerenciamento</title>
+</h:head>
+
+<h:body>
+    <div class="flex-dashboard">
+    
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../resources/images/icons8-coroa-64.png"> </img>
+                <h2>Hotel <strong>Kingdom</strong></h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <i class="fas fa-house-user"></i>
+                        <a href="encerramento.xhtml"> Encerramento da Hospedagem </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-hotel"></i>
+                        <a href="gerenciamento.xhtml"> Gerenciamento de Locação </a>
+                    </li>
+                    <li>
+                        <i class="fas fa-user-edit"></i>
+                        <a href="cadastro.xhtml"> Cadastro de Clientes </a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        
+        <main>
+        
+            <header>
+                <a href="#"> <i class="fas fa-house-user"></i> Dashboard</a>
+                <a href="../index.html"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+            </header>
+            
+            <div class="main-content">
+                    <div class="panel"> 
+                         <div class="register-title">
+                            <img src="../resources/images/icons8-coroa-64.png" alt=""> </img>
+                            <h2>
+                               Hotel <strong> Kingdom</strong>
+                            </h2>
+                         </div>
+               
+                <h:form>
+                	<p:growl/>
+					<h:outputLabel>Cliente</h:outputLabel>      
+					<div class="form-group">          
+	                	<p:selectOneMenu value="#{locacaoController.clienteSelecionado}"
+							converter="clienteConverter"
+							required="true"
+							requiredMessage="O campo cliente é obrigatorio!">
+							<f:selectItem itemLabel="SELECIONE" />
+							<f:selectItems 
+								value="#{clienteController.listar}" 
+								var="cliente"
+								itemLabel="#{cliente.nome}"
+								itemValue="#{cliente}" />
+						</p:selectOneMenu>	
+                	</div>
+                	<h:outputLabel> Locação</h:outputLabel>
+                	<div class="form-group">
+	                    <p:selectOneMenu value="#{locacaoController.quartoSelecionado}"
+							converter="quartoConverter"
+							required="true"
+							requiredMessage="O campo quarto é obrigatorio!">
+							<f:selectItem itemLabel="SELECIONE" />
+							<f:selectItems 
+								value="#{quartoController.listar}" 
+								var="quarto"
+								itemLabel="#{quarto.numero}"
+								itemValue="#{quarto}" />
+						</p:selectOneMenu>
+                    </div>
+                    <h:outputLabel>Acompanhantes</h:outputLabel>
+                    <div class="form-group">
+	                    <h:selectOneRadio value="#{locacaoController.locacao.casal}" layout="lineDirection">
+						  <f:selectItem itemValue="false" itemLabel="Solteiro"/>
+						  <f:selectItem itemValue="true" itemLabel="Casal"/>
+						</h:selectOneRadio>
+                    </div>
+                    
+                    <h:outputLabel>Estadia</h:outputLabel>
+                    <div class="form-group">
+	                    <label> Inicio</label> 
+	                    <p:calendar value="#{locacaoController.locacao.dataInicio}" pattern="dd/MM/yyyy" locale="pt">  
+	                    </p:calendar>
+	                    <label> Fim </label> 
+	                    <p:calendar value="#{locacaoController.locacao.dataFim}" pattern="dd/MM/yyyy" locale="pt">
+	                     </p:calendar>
+                    </div>
+                        <h:commandButton value="Reservar" styleClass="btn btn-primary" action="#{locacaoController.salvar}" ajax="false"></h:commandButton>
+                </h:form>
+                
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <h:outputScript src="plugins/bootstrap/js/bootstrap.min.js"> </h:outputScript>
+    <h:outputScript src="plugins/fontawesome/js/all.min.js"></h:outputScript>
+    <h:outputScript src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></h:outputScript>
+    <h:outputScript src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></h:outputScript>
+    <h:outputScript src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></h:outputScript>
+</h:body>
+
+</html>

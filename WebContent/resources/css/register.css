@@ -1,0 +1,44 @@
+.register-parent{
+    height: 100%;
+    padding: 0 2%;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.register{
+    width: 100%;
+    max-width: 600px;
+    padding: 40px 30px 80px 80px;
+    background-color: #fff;
+}
+.register-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.register-title h2 {
+    font-size: 20px;
+}
+.register .form-grup label{
+    font-size: 14px;
+}
+.register .form-grup input{
+    font-size: 14px;
+}
+.btn-primary{
+    margin-top: 40px;
+    background : linear-gradient(135deg, #6e8efb, #a777e3);
+    color: #fff;
+    width: 100%;
+    display: block;
+}
+button:hover{
+    color: #fff;
+
+    transform: scale(1.05);
+    transition:  .2s;
+    font-size: 16px;
+}
