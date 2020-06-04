@@ -96,8 +96,8 @@ public class ClienteDAO {
 		String sql = "SELECT c.id, nome, cpf, email, telefone " + 
 				     " FROM cliente c " + 
 				     " LEFT JOIN locacao l" + 
-				     " ON c.id = l.id_cliente " + 
-					 " WHERE l.id_cliente IS NULL;";
+				     " ON c.id = l.id_cliente" +
+				     " WHERE l.id_cliente IS NULL;";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ResultSet rs = null;
 		List<Cliente> listaRetorno = new ArrayList<>();

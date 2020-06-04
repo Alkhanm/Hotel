@@ -28,7 +28,6 @@ public class ClienteController {
 	}
 
 
-
 	public void limparCampos() {
 		cliente = new Cliente();
 	}

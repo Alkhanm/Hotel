@@ -35,6 +35,34 @@ public class LocacaoDAO {
 		} finally {
 			Conexao.fecharConexao(conn, ps, null);
 		}
+		
+		
+	}
+
+	public void alterar(Locacao locacao) throws Exception {
+		Connection conn = Conexao.conectarNoBancoDeDados();
+		String sql = "UPDATE locacao "
+				+ " SET"
+				+ " id_cliente = ?, "
+				+ " id_quarto = ?, "
+				+ " casal = ?, "
+				+ " data_inicio = ?, "
+				+ " data_fim = ? "
+				+ " WHERE id = ? ";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		try {
+			ps.setLong(1, locacao.getCliente().getId());
+			ps.setLong(2, locacao.getQuarto().getId());
+			ps.setBoolean(3, locacao.isCasal());
+			ps.setDate(4, Date.valueOf(locacao.getDataInicio()));
+			ps.setDate(5, Date.valueOf(locacao.getDataFim()));
+			ps.setLong(6, locacao.getId());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			throw new Exception(e);
+		} finally {
+			Conexao.fecharConexao(conn, ps, null);
+		}
 	}
 	
 	public void excluir(Locacao locacao) throws Exception {

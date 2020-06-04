@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../resources/css/all.css"> </link>
     <link rel="stylesheet" href="../resources/plugins/bootstrap/css/bootstrap.min.css"> </link>
     <link rel="stylesheet" href="../resources/plugins/fontawesome/css/all.min.css"> </link>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
     <title>Kingdom - Gerenciamento</title>
 </h:head>
 
@@ -49,51 +50,68 @@
             <div class="main-content">
                     <div class="panel"> 
                          <div class="register-title">
-                            <img src="../resources/images/icons8-coroa-64.png"> </img>
+                            <img src="../resources/images/icons8-coroa-64.png" alt=""> </img>
                             <h2>
                                Hotel <strong> Kingdom</strong>
                             </h2>
                          </div>
+            <h:form> 
+	            <p:dataTable value="#{locacaoController.lista}" 
+	            	var="locacao" 
+	            	id="locacoes"
+	            	border="1" rows="5" 
+					emptyMessage="Nenhuma locação realizada!">
+					<p:column id="id" headerText="Id">
+						<h:outputText value="#{locacao.id}" />
+					</p:column>
+					<p:column headerText="Nome Cliente">
+						<h:outputText value="#{locacao.cliente.nome}" />
+					</p:column>
+					<p:column headerText="Número do Quarto">
+						<h:outputText value="#{locacao.quarto.numero}" />
+					</p:column>
+					<p:column headerText="Dia da Reserva">
+						<h:outputText value="#{locacao.dataInicio}" />
+					</p:column>
+					<p:column headerText="Fim da Reserva">
+						<h:outputText value="#{locacao.dataFim}" />
+					</p:column>
+					<p:column headerText="Valor a pagar">
+						<h:outputText value="R$ #{locacao.valorTotal}" />
+					</p:column>
+					<p:column headerText="Ações">
+						<p:commandButton
+							action="#{locacaoController.editar}"
+							value="Editar" icon="pi pi-pencil"
+							ajax="false">
+							<f:setPropertyActionListener 
+								value="#{locacao}" 
+								target="#{locacaoController.locacao}" />
+						</p:commandButton>
+					</p:column>	
+				 	<p:column headerText="">
+						<p:commandButton
+							action="#{locacaoController.excluir}"
+							value="Finalizar" icon="ui-icon-check"
+							ajax="false">
+							<f:setPropertyActionListener 
+								value="#{locacao}" 
+								target="#{locacaoController.locacao}" />
+						</p:commandButton>
+					</p:column> 
+				</p:dataTable>
+            </h:form>
+         </div>   
+         </div>
+        </main>
+    </div>
 
-						<h:form>
-							<p:growl />
-
-							<div class="form-group">
-								<h:outputLabel value="Nome" />
-								<h:inputText value="#{clienteController.cliente.nome}"
-									required="true" styleClass="form-control"
-									requiredMessage="O campo nome é obrigatorio!" />
-							</div>
-
-							<div class="form-group">
-								<h:outputLabel value="CPF " />
-								<h:inputText value="#{clienteController.cliente.cpf}"
-									required="true" styleClass="form-control"
-									requiredMessage="O campo nome é obrigatorio!" />
-							</div>
-
-							<div class="form-group">
-								<h:outputLabel value="Telefone " />
-								<h:inputText value="#{clienteController.cliente.telefone}"
-									required="true" styleClass="form-control"
-									requiredMessage="O campo nome é obrigatorio!" />
-							</div>
-
-							<div class="form-group">
-								<h:outputLabel value="Email " />
-								<h:inputText value="#{clienteController.cliente.email}"
-									required="true" styleClass="form-control"
-									requiredMessage="O campo nome é obrigatorio!" />
-							</div>
-							<h:commandButton value="Cadastrar" styleClass="btn btn-primary"
-								action="#{clienteController.salvar}" ajax="false" />
-						</h:form>
-					</div>
-				</div>
-			</main>
-		</div>
+    <h:outputScript src="plugins/bootstrap/js/bootstrap.min.js"/>
+    <h:outputScript src="plugins/fontawesome/js/all.min.js"/>
 </h:body>
 </html>
+
+
 
 
 

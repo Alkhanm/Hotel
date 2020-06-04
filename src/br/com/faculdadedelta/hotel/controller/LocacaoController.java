@@ -1,5 +1,6 @@
 package br.com.faculdadedelta.hotel.controller;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -19,8 +21,12 @@ import br.com.faculdadedelta.hotel.util.Conexao;
 
 @ManagedBean
 @ViewScoped
-public class LocacaoController {
+public class LocacaoController implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Locacao locacao = new Locacao();
 	private Cliente clienteSelecionado = new Cliente();
 	private Quarto quartoSelecionado = new Quarto();
@@ -46,30 +52,48 @@ public class LocacaoController {
 		FacesMessage msg = new FacesMessage(mensagem);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-
-	public String salvar() {
-		try {
-				// Verifica se esse quarto já está reservado por alguém.
-					locacao.setCliente(clienteSelecionado);
-					locacao.setQuarto(quartoSelecionado);
-					dao.incluir(locacao);
-					limparCampos();
-					exibirMensagem("Locação realizada com sucesso!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			exibirMensagem("Erro ao realizar a operação." + " Tente novamente mais tarde. " + e.getMessage());
-		}
-		return "gerenciamento.xhtml";
+	
+	
+	public String editar() {
+		return "editar.xhtml";
 	}
 
-	public String finalizar() {
+	public String salvar() throws Exception {
+		try {
+			if (locacao.getId() == null) {
+				// verifica se não foi inserida uma data final anterior a data de entrada.
+				if (locacao.getDataInicio().compareTo(locacao.getDataFim()) <= 0) {
+						locacao.setCliente(clienteSelecionado);
+						locacao.setQuarto(quartoSelecionado);
+						dao.incluir(locacao);
+						limparCampos();
+						exibirMensagem("Locação realizada com sucesso!");
+					} else {
+						exibirMensagem("Uma locação com as datas inseridas é impossivel! Por favor preenchar corretamente os campos.");
+					}
+			} else {
+				dao.alterar(locacao);
+				limparCampos();
+				exibirMensagem("Alteração realizada!");
+			}
+		} catch (Exception e) {
+			   e.printStackTrace();
+			   exibirMensagem("Erro ao realizar a operação salvar/alterar");
+		}
+		return "hospedagem.xhtml";
+	}
+
+	public String excluir() {
 		try {
 			dao.excluir(locacao);
+			limparCampos();
+			exibirMensagem("Excluido!");
 		} catch (Exception e) {
 			e.printStackTrace();
+			exibirMensagem("Erro ao excluir.");
 		}
 		locacao = new Locacao();
-		return "";
+		return "encerramento.xhtml";
 	}
 
 	public Cliente getClienteSelecionado() {
@@ -98,7 +122,5 @@ public class LocacaoController {
 		
 		return lista;
 	}
-
-	
 
 }

@@ -16,25 +16,12 @@ import br.com.faculdadedelta.hotel.modelo.Quarto;
 public class QuartoController {
 
 	private QuartoDAO dao = new QuartoDAO();
-	private Quarto quarto = new Quarto();
-
-	public void limparCampos() {
-		quarto = new Quarto();
-	}
 
 	private void exibirMensagem(String mensagem) {
 		FacesMessage msg = new FacesMessage(mensagem);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public void salvar() {
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			exibirMensagem("Erro ao realizar a operação." + " Tente novamente mais tarde. " + e.getMessage());
-		}
-	}
 	public List<Quarto> getListar(){
 		List<Quarto> listaRetorno = new ArrayList<>();
 		try {

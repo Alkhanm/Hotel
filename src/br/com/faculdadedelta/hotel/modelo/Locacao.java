@@ -10,7 +10,8 @@ public class Locacao {
 	private boolean casal;
 	private Cliente cliente;
 	private Quarto quarto;
-	private final Integer VALOR_HOSPEDAGEM = 95; // R$95 por dia
+	private Double valorTotal;
+	private final Integer VALOR_DIARIA = 100; // R$95 por dia
 	
 
 	
@@ -79,6 +80,20 @@ public class Locacao {
 	public void setQuarto(Quarto quarto) {
 		this.quarto = quarto;
 	}
+	
+	public Double getValorTotal() {
+		if (casal) { // o aluguel aumenta em 50 para quartos para casal
+			valorTotal = (double) (dataFim.compareTo(dataInicio) * (VALOR_DIARIA + 50));
+		} else {
+			valorTotal = (double) (dataFim.compareTo(dataInicio) * VALOR_DIARIA);
+		}
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		this.valorTotal = valorTotal;
+	}
+	
 
 
 	@Override
@@ -111,7 +126,8 @@ public class Locacao {
 			return false;
 		return true;
 	}
-	
+
+
 	
 	
 }
